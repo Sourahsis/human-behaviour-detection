@@ -1,0 +1,51 @@
+import cv2
+import numpy as np
+from keras.models import load_model
+from PIL import Image
+
+import cv2: Imports the OpenCV library for computer vision tasks like image processing and video capture.
+import numpy as np: Imports the NumPy library for numerical operations, creating arrays, and manipulating data efficiently.
+from keras.models import load_model: Imports the load_model function from Keras (likely used here for compatibility with TensorFlow 2.x) to load a pre-trained deep learning model.
+from PIL import Image: Imports the Image class from the Pillow Imaging Library (PIL) for image manipulation tasks.
+Model Loading:
+
+Python
+# Load the model
+model = load_model('my_model.h5')
+
+This line loads a pre-trained deep learning model saved in the HDF5 format (my_model.h5) using the load_model function. The specific model architecture and purpose depend on its training data and intended use case (e.g., image classification, object detection).
+Image Preprocessing Function:
+
+Python
+def read_img(img):
+  """Converts cv2 image to numpy array and resizes for model."""
+  image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert to RGB for PIL
+  image = Image.fromarray(image)
+  return np.asarray(image.resize((160, 160)))
+
+This function defines a custom function named read_img that takes a cv2 image (img) as input.
+image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB): Converts the image from BGR (OpenCV's default color space) to RGB (expected by PIL) for compatibility.
+image = Image.fromarray(image): Creates a PIL Image object from the converted NumPy array.
+return np.asarray(image.resize((160, 160))): Resizes the image to a fixed size of 160x160 pixels (common for some deep learning models) and converts it back to a NumPy array for prediction. This resizing step ensures that the input to the model is consistent with the dimensions it was trained on.
+Prediction Function:
+
+Python
+def test_predict(test_image):
+  """Makes a prediction using the loaded model."""
+  result = model.predict(np.asarray([read_img(test_image)]))
+  return np.max(result) * 100
+
+This function defines a function named test_predict that takes a test image (test_image) as input.
+result = model.predict(np.asarray([read_img(test_image)])): Makes a prediction using the loaded model (model) on a batch of one image (wrapped in a NumPy array) that has been preprocessed by the read_img function. The model likely outputs a probability distribution or a set of scores for different classes.
+return np.max(result) * 100: Extracts the maximum value from the prediction result (result), possibly representing the most likely class or score. The multiplication by 100 might be for scaling the output to a percentage (depending on the model's output format).
+Camera Setup and Label Loading:
+
+Python
+# CAMERA can be 0 or 1 based on default camera of your computer.
+camera = cv2.VideoCapture('Untitled video - Made with Clipchamp (6).mp4')
+
+# Grab the labels from the labels.txt file.
+labels = open('labels.txt', 'r').readlines()
+
+camera = cv2.VideoCapture('Untitled video - Made with Clipchamp (6).mp4'): Initializes a video capture object (camera) using OpenCV. This line attempts to open the specified video file ('Untitled video - Made with Clipchamp (6).mp4'). If you want to use the webcam instead, change the argument to 0 or 1 (depending on your computer's default camera).
+labels = open('labels.txt', 'r').readlines(): Opens a text file named 'labels.txt' in read mode ('r') and reads its lines into a list named labels. This file likely contains human-readable labels corresponding to the model's output classes (e.g., "normal", "abnormal").

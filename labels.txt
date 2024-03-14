@@ -1,0 +1,15 @@
+0 sitting               
+1 using_laptop        
+2 hugging             
+3 sleeping             
+4 drinking           
+5 clapping           
+6 dancing             
+7 cycling           
+8 calling            
+9 laughing             
+10 eating               
+11 fighting            
+12 listening_to_music   
+13 running               
+14 texting  
