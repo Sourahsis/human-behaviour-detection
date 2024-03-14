@@ -48,4 +48,4 @@ camera = cv2.VideoCapture('Untitled video - Made with Clipchamp (6).mp4')
 labels = open('labels.txt', 'r').readlines()
 
 camera = cv2.VideoCapture('Untitled video - Made with Clipchamp (6).mp4'): Initializes a video capture object (camera) using OpenCV. This line attempts to open the specified video file ('Untitled video - Made with Clipchamp (6).mp4'). If you want to use the webcam instead, change the argument to 0 or 1 (depending on your computer's default camera).
-labels = open('labels.txt', 'r').readlines(): Opens a text file named 'labels.txt' in read mode ('r') and reads its lines into a list named labels. This file likely contains human-readable labels corresponding to the model's output classes (e.g., "normal", "abnormal").
+labels = open('labels.txt', 'r').readlines(): Opens a text file named 'labels.txt' in read mode ('r') and reads its lines into a list named labels. This file  contains human-readable labels corresponding to the model's output classes (e.g., "normal", "abnormal").We are calculating the possibale anomaly score for each section of the normal label , if it is less than 150 then we can declare it as abnormal
